@@ -1,0 +1,180 @@
+/* 基本のリセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+/* ヘッダー全体の背景を黒に */
+.header {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 15px 40px;
+}
+
+.header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 横並びで均等配置 */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ロゴのサイズ調整 */
+.header__logo img {
+    height: 30px;
+    display: block;
+}
+
+/* 検索ボックス（白背景に黒文字） */
+.header__search {
+    flex: 1;
+    margin: 0 40px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* ナビゲーション（黒背景に白文字） */
+.nav-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 出品ボタン（白背景に赤文字または黒文字） */
+.btn-sell {
+    background-color: #ffffff;
+    color: #ff0000; /* 目立つように赤にしていますが、黒にするなら #000000 */
+    padding: 8px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-sell:hover {
+    opacity: 0.8;
+}
+
+/* コンテナ設定 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* タブのスタイル */
+.tabs {
+    display: flex;
+    gap: 30px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 30px;
+}
+
+.tab-item {
+    text-decoration: none;
+    color: #888;
+    font-weight: bold;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.tab-item.active {
+    color: #ff0000; /* アクティブなタブの色（赤など） */
+}
+
+.tab-item.active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ff0000;
+}
+
+/* 商品グリッド (4枚並び) */
+.item-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* カード間の隙間 */
+}
+
+.item-card {
+    width: calc(25% - 15px); /* 100% / 4枚 - 隙間分 */
+    margin-bottom: 20px;
+}
+
+.item-image {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 正方形を維持 */
+    background-color: #f5f5f5;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 画像を枠いっぱいに収める */
+}
+
+.item-info {
+    margin-top: 10px;
+}
+
+.item-name {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* レスポンシブ対応（スマホでは2枚にするなど） */
+@media (max-width: 768px) {
+    .item-card {
+        width: calc(50% - 10px);
+    }
+}
+
+.item-image {
+    position: relative;
+    /* 親要素を基準にする */
+    overflow: hidden;
+    /* はみ出た部分を隠す */
+}
+
+.sold-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ff0000;
+    /* 透過なしの赤でまずはテスト */
+    color: #ffffff;
+    padding: 5px 15px;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 10;
+    /* 画像より確実に前に出す */
+    display: block !important;
+}
