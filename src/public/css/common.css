@@ -22,18 +22,21 @@ body {
     justify-content: space-between; /* 横並びで均等配置 */
     max-width: 1200px;
     margin: 0 auto;
+    gap: 20px;
 }
 
 /* ロゴのサイズ調整 */
 .header__logo img {
     height: 30px;
+    width: auto;
     display: block;
 }
 
 /* 検索ボックス（白背景に黒文字） */
 .header__search {
     flex: 1;
-    margin: 0 40px;
+    margin: 0 20px;
+    min-width: 300px;
 }
 
 .search-input {
@@ -50,7 +53,8 @@ body {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 20px;
+    gap: 15px;
+    white-space: nowrap;
 }
 
 .nav-link {
@@ -60,17 +64,19 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
+    white-space: nowrap;
 }
 
 /* 出品ボタン（白背景に赤文字または黒文字） */
 .btn-sell {
     background-color: #ffffff;
     color: #ff0000; /* 目立つように赤にしていますが、黒にするなら #000000 */
-    padding: 8px 25px;
+    padding: 6px 20px;
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .btn-sell:hover {

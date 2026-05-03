@@ -17,7 +17,7 @@
             {{-- ロゴ部分 --}}
             <div class="header__logo">
                 <a href="/">
-                    <img src="{{ asset('img/logo.svg') }}" alt="COACHTECH">
+                    <img src="{{ asset('img/coachtech_header_logo.png') }}" alt="COACHTECH">
                 </a>
             </div>
 
@@ -43,7 +43,7 @@
                     @else
                         {{-- ログアウト中のみ表示 --}}
                         <li class="nav-item"><a href="/login">ログイン</a></li>
-                        <li class="nav-item"><a href="/register">会員登録</a></li>
+                        <li class="nav-item"><a href="/register">マイページ</a></li>
                     @endauth
                     <li class="nav-item nav-item--btn"><a href="/sell">出品</a></li>
                 </ul>
