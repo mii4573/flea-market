@@ -44,4 +44,9 @@ class Item extends Model
        return $this->hasOne(Purchase::class); 
     }
 
+    public function isSold(): bool
+    {
+       return $this->purchase()->exists();
+    }
+
 }

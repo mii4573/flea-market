@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Purchase;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,9 +27,12 @@ class DatabaseSeeder extends Seeder
            ItemSeeder::class,
         ]);
 
-        \App\Models\Purchase::create([
+        Purchase::create([
             'user_id' => 1,
             'item_id' => 1,
+            'payment_method' => 'card', 
+            'shipping_address' => '東京都渋谷区...', 
+            'shipping_post_code' => '123-4567',
         ]);
     }
 }

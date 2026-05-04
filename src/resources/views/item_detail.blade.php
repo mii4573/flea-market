@@ -14,9 +14,9 @@
             <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}">
         @endisset
 
-        @isset($item->purchase)
+        @if($item->purchase)
             <div class="sold-label">SOLD</div>
-        @endisset
+        @endif
     </div>
 
     {{-- 右側：商品詳細情報 --}}
@@ -27,7 +27,7 @@
 
         <div class="stats">
             <div class="icon-group">
-                <img src="{{ asset('img/heat_default_icon.png') }}" alt="いいね">
+                <img src="{{ asset('img/heart_default_icon.png') }}" alt="いいね">
                 <span class="icon-count">{{ isset($item->likes) ? $item->likes->count() : 0 }}</span>
             </div>
             <div class="icon-group">
@@ -63,30 +63,32 @@
                 </tr>
             </table>
         </div>
-
-        {{-- 1-10. コメント表示エリア --}}
+            {{-- 1-10. コメント表示エリア --}}
         <div class="comment-section">
            <h3>コメント ({{ isset($item->comments) ? $item->comments->count() : 0 }})</h3>
            <div class="comment-list">
               @isset($item->comments)
                 @foreach($item->comments as $comment)
-                  <div class="comment-item">
-                    <div class="comment-user">
-                        <div class="user-icon">
+                  <div class="comment-item" style="margin-bottom: 20px;">
+                    {{-- ユーザー情報：アイコン(グレーの丸)と名前 --}}
+                    <div class="comment-user" style="display: flex; align-items: center; margin-bottom: 8px;">
+                        <div class="user-icon" style="width: 40px; height: 40px; background-color: #e0e0e0; border-radius: 50%; overflow: hidden; margin-right: 10px; display: flex; align-items: center; justify-content: center;">
                             @if(isset($comment->user->image_path))
-                                <img src="{{ asset('storage/' . $comment->user->image_path) }}" alt="ユーザー">
+                                <img src="{{ asset('storage/' . $comment->user->image_path) }}" alt="ユーザー" style="width: 100%; height: 100%; object-fit: cover;">
                             @endif
                         </div>
-                        <span class="user-name">{{ $comment->user->name ?? '名無しさん' }}</span>
+                        <span class="user-name" style="font-weight: bold;">{{ $comment->user->name ?? '名無しさん' }}</span>
                     </div>
-                    {{-- コメント本文の表示を追加 --}}
-                    <div class="comment-content">
-                        {{ $comment->content }}
+
+                    {{-- コメント本文：グレーのボックス --}}
+                    <div class="comment-content" style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; color: #333;">
+                        {{ $comment->comment }} {{-- カラム名が 'comment' か 'content' か確認してください --}}
                     </div>
                   </div>
                 @endforeach
               @endisset
-            </div>
+           </div>
+
 
             {{-- 1-11. コメント投稿フォーム --}}
             <div class="comment-form">

@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Profile;
 use App\Models\Item;
-use App\Models\Order;
+use App\Models\Purchase;
 
 
 class User extends Authenticatable
@@ -47,7 +47,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile()
+    public function profiles()
     {
         return $this->hasOne(Profile::class);
     }
@@ -57,9 +57,9 @@ class User extends Authenticatable
         return $this->hasMany(Item::class, 'seller_id');
     }
 
-    public function orders()
+    public function purchases()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(purchase::class);
     }
 
     public function likedItems()
