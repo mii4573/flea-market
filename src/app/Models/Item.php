@@ -49,4 +49,9 @@ class Item extends Model
        return $this->purchase()->exists();
     }
 
+    public function category()
+    {
+       return $this->belongsTo(Category::class); 
+    }
+
 }

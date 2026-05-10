@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
 @push('css')
-    {{-- 反映を速めるためのタイムスタンプ付き読み込み --}}
     <link rel="stylesheet" href="{{ asset('css/item_detail.css') }}?{{ time() }}">
 @endpush
 
 @section('content')
 <div class="item-detail-container">
     
-    {{-- 左側：商品画像 --}}
     <div class="item-image">
         @isset($item->image_path)
             <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}">
@@ -19,7 +17,6 @@
         @endif
     </div>
 
-    {{-- 右側：商品詳細情報 --}}
     <div class="item-info">
         <h1>{{ $item->name ?? '商品名なし' }}</h1>
         <p class="brand-name">{{ $item->brand_name ?? 'ブランド名なし' }}</p>
@@ -36,7 +33,7 @@
             </div>
         </div>
 
-        <a href="#" class="btn-buy">購入手続きへ</a>
+        <a href="{{ route('purchase.index', ['item_id' => $item->id])}}" class="btn-buy">購入手続きへ</a>
 
         <div class="description">
             <h3>商品説明</h3>
@@ -49,21 +46,19 @@
                 <tr>
                     <th>カテゴリー</th>
                     <td>
-                        @isset($item->categories)
-                            @foreach($item->categories as $category)
-                                <span class="category-tag">{{ $category->name }}</span>
-                            @endforeach
+                        @isset($item->category)
+                                <span class="category-tag">{{ $item->category->name }}</span>
                         @endisset
                     </td>
                 </tr>
-                {{-- 商品の状態も追加しておくと親切です --}}
+
                 <tr>
                     <th>商品の状態</th>
                     <td>{{ $item->condition ?? '未設定' }}</td>
                 </tr>
             </table>
         </div>
-            {{-- 1-10. コメント表示エリア --}}
+
         <div class="comment-section">
            <h3>コメント ({{ isset($item->comments) ? $item->comments->count() : 0 }})</h3>
            <div class="comment-list">
@@ -80,17 +75,15 @@
                         <span class="user-name" style="font-weight: bold;">{{ $comment->user->name ?? '名無しさん' }}</span>
                     </div>
 
-                    {{-- コメント本文：グレーのボックス --}}
+
                     <div class="comment-content" style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; color: #333;">
-                        {{ $comment->comment }} {{-- カラム名が 'comment' か 'content' か確認してください --}}
+
                     </div>
                   </div>
                 @endforeach
               @endisset
            </div>
 
-
-            {{-- 1-11. コメント投稿フォーム --}}
             <div class="comment-form">
                <p>商品へのコメント</p>
                <form action="#" method="POST">

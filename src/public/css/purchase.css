@@ -1,0 +1,184 @@
+/* public/css/purchase.css */
+
+/* 全体レイアウト */
+.purchase-container {
+    display: flex;
+    gap: 50px;
+    margin-top: 40px;
+    align-items: flex-start;
+}
+
+/* --- 左側：メインコンテンツ --- */
+.purchase-main {
+    flex: 2;
+}
+
+/* 商品情報エリア */
+.item-flex {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.item-image img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+}
+
+/* 画像エリアを相対位置に設定（ラベルを重ねる基準にする） */
+.item-image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+/* 購入画面用のSOLDラベル調整 */
+.sold-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* 黒の半透明で画像に重ねる */
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    /* 画像の角丸に合わせる */
+    pointer-events: none;
+    /* ラベルがクリックを邪魔しないように */
+}
+
+.item-detail h2 {
+    font-size: 20px;
+    margin: 0 0 5px 0;
+}
+
+.item-detail .price {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* ライン区切りのセクション（支払い方法・配送先） */
+.selection-row {
+    border-top: 1px solid #eee;
+    padding: 25px 0;
+}
+
+/* 最後の要素の下にもラインを引く */
+.selection-row:last-of-type {
+    border-bottom: 1px solid #eee;
+}
+
+.row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.row-header h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.link-select {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* プルダウン */
+.select-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 15px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* 住所テキスト */
+.row-content p {
+    margin: 4px 0;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* --- 右側：決済サイドバー --- */
+.purchase-side {
+    flex: 1;
+    position: sticky;
+    top: 20px;
+}
+
+/* 決済情報ボックス（枠あり） */
+.purchase-side-box {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: 15px 0;
+    font-size: 15px;
+}
+
+.summary-table th {
+    text-align: left;
+    font-weight: normal;
+}
+
+.summary-table td {
+    text-align: right;
+    font-weight: bold;
+}
+
+/* 商品代金と支払い方法の間のライン */
+.table-row:first-child {
+    border-bottom: 1px solid #eee;
+}
+
+/* 購入ボタン（枠の外） */
+.btn-submit {
+    width: 100%;
+    padding: 16px;
+    background-color: #ff4d4d;
+    /* メルカリ風の赤 */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #e64545;
+}
+
+/* エラーメッセージ */
+.error-text {
+    color: #ff4d4d;
+    font-size: 14px;
+}

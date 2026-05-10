@@ -2,18 +2,17 @@
 
 @section('content')
 <div class="container">
-    {{-- タブ切り替え部分 --}}
+    
     <div class="tabs">
         <a href="/" class="tab-item {{ !request('tab') || request('tab') == 'recommend' ? 'active' : '' }}">おすすめ</a>
         
         @auth
-            {{-- 認証済みユーザーのみマイリストを表示 --}}
+
             <a href="/?tab=mylist" class="tab-item {{ request('tab') == 'mylist' ? 'active' : '' }}">マイリスト</a>
         @endauth
     </div>
 
-    {{-- 商品グリッド (4枚ずつ横並び) --}}
-    <div class="item-grid">
+        <div class="item-grid">
         @foreach($items as $item)
             <div class="item-card">
                 <a href="/item/{{ $item->id }}">
