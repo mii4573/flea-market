@@ -26,10 +26,10 @@
                     <h3>支払い方法</h3>
                 </div>
                 <div class="row-content">
-                    <select name="payment_method" class="select-input">
+                    <select name="payment_method" class="select-input" form="purchase-form">
                         <option value="" disabled selected>選択してください</option>
-                        <option value="konbini">コンビニ払い</option>
-                        <option value="card">クレジットカード</option>
+                        <option value="コンビニ払い">コンビニ払い</option>
+                        <option value="クレジットカード">クレジットカード</option>
                     </select>
                 </div>
             </div>
@@ -51,20 +51,41 @@
         </div>
 
         <div class="purchase-side">
-            <div class="purchase-side-box">
-                <table class="summary-table">
-                    <tr class="table-row">
+           <form action="{{ route('purchase.store', ['item_id' => $item->id]) }}" method="POST" method="POST" id="purchase-form">  
+             @csrf   
+              <div class="purchase-side-box">
+                  <table class="summary-table">
+                      <tr class="table-row">
                         <th>商品代金</th>
                         <td>¥{{ number_format($item->price) }}</td>
-                    </tr>
-                    <tr class="table-row">
+                      </tr>
+                      <tr class="table-row">
                         <th>支払い方法</th>
                         <td class="selected-method" id="display-payment-method">選択してください</td>
-                    </tr>
-                </table>
-            </div>
-            <button class="btn-submit">購入する</button>
+                      </tr>
+                  </table>
+              </div>
+              <button type="submit" class="btn-submit">購入する</button>
+            </form>
         </div>
     </div>
 </div>
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 1. 左側のセレクトボックスと、右側の表示ラベルを取得
+        const paymentSelect = document.querySelector('select[name="payment_method"]');
+        const displayLabel = document.getElementById('display-payment-method');
+
+        // 2. セレクトボックスの値が変わった時の処理
+        paymentSelect.addEventListener('change', function () {
+            // 選択された項目のテキスト（例：クレジットカード）を取得
+            const selectedText = paymentSelect.options[paymentSelect.selectedIndex].text;
+            
+            // 右側のラベルを書き換える
+            displayLabel.textContent = selectedText;
+        });
+    });
+</script>
+@endpush
 @endsection

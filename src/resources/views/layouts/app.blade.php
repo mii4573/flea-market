@@ -9,26 +9,24 @@
     <!-- CSS (Google Fontsや自作CSS) -->
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}"> {{-- リセットCSSがあれば --}}
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
-    @stack('css') {{-- ページ個別のCSSを追加したい時用 --}}
+    @stack('css') 
 </head>
 <body>
     <header class="header">
         <div class="header__inner">
-            {{-- ロゴ部分 --}}
             <div class="header__logo">
                 <a href="/">
                     <img src="{{ asset('img/coachtech_header_logo.png') }}" alt="COACHTECH">
                 </a>
             </div>
 
-            {{-- 検索バー (全ページ共通ならここに配置) --}}
             <div class="header__search">
                 <form action="/search" method="GET">
                     <input type="text" name="keyword" placeholder="なにをお探しですか？">
                 </form>
             </div>
 
-            {{-- ナビゲーション --}}
+
             <nav class="header__nav">
                 <ul class="nav-list">
                     @auth
@@ -52,10 +50,9 @@
     </header>
 
     <main class="main-content">
-        {{-- 各ページのコンテンツがここに注入される --}}
         @yield('content')
     </main>
 
-
+    @stack('scripts')
 </body>
 </html>

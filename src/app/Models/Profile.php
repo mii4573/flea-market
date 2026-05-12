@@ -9,6 +9,15 @@ class Profile extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'display_name',
+        'post_code',
+        'address',
+        'building',
+        'image_path', // プロフィール画像などがあれば
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

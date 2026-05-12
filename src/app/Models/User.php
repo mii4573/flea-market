@@ -47,7 +47,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function profiles()
+    public function profile()
     {
         return $this->hasOne(Profile::class);
     }
@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function purchases()
     {
-        return $this->hasMany(purchase::class);
+        return $this->hasMany(Purchase::class);
     }
 
     public function likedItems()
