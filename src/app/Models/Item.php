@@ -49,9 +49,10 @@ class Item extends Model
        return $this->purchase()->exists();
     }
 
-    public function category()
+    public function categories()
     {
-       return $this->belongsTo(Category::class); 
+        // 中間テーブル 'item_category' を経由して、複数のCategoryを取得できるようにします
+        return $this->belongsToMany(Category::class, 'item_category');
     }
 
 }

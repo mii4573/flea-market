@@ -37,22 +37,29 @@
             <div class="selection-row">
                 <div class="row-header">
                     <h3>配送先</h3>
-                    <a href="#" class="link-select">変更する</a>
+                    <a href="{{ route('purchase.address.edit', ['item_id' => $item->id]) }}" class="link-select">変更する</a>
                 </div>
                 <div class="row-content">
-                    @auth
-                        <p>〒{{ substr(Auth::user()->postal_code, 0, 3) }}-{{ substr(Auth::user()->postal_code, 3) }}</p>
-                        <p>{{ Auth::user()->address }}{{ Auth::user()->building }}</p>
+                   @auth
+                     {{-- コントローラーで設定した $address (配列) を使用する --}}
+                     @if(!empty($address['post_code']) && !empty($address['address']))
+                       <p>〒{{ $address['post_code'] }}</p>
+                       <p>{{ $address['address'] }}{{ $address['building'] }}</p>
+                     @else
+                       {{-- プロフィールも一時住所もない場合 --}}
+                       <p class="error-text">配送先情報が登録されていません。右上の「変更する」から入力してください。</p>
+                     @endif
                     @else
-                        <p class="error-text">配送先を表示するにはログインが必要です。</p>
+                      <p class="error-text">配送先を表示するにはログインが必要です。</p>
                     @endauth
                 </div>
             </div>
         </div>
 
         <div class="purchase-side">
-           <form action="{{ route('purchase.store', ['item_id' => $item->id]) }}" method="POST" method="POST" id="purchase-form">  
-             @csrf   
+           <form action="{{ route('purchase.store', ['item_id' => $item->id]) }}" method="POST"  id="purchase-form">  
+             @csrf
+              <input type="hidden" name="payment_method" id="hidden-payment-method" value=""> 
               <div class="purchase-side-box">
                   <table class="summary-table">
                       <tr class="table-row">
@@ -65,6 +72,9 @@
                       </tr>
                   </table>
               </div>
+              @error('payment_method')
+                <p style="color: red; font-size: 0.8rem;">{{ $message }}</p>
+              @enderror
               <button type="submit" class="btn-submit">購入する</button>
             </form>
         </div>
@@ -79,11 +89,14 @@
 
         // 2. セレクトボックスの値が変わった時の処理
         paymentSelect.addEventListener('change', function () {
-            // 選択された項目のテキスト（例：クレジットカード）を取得
+            
             const selectedText = paymentSelect.options[paymentSelect.selectedIndex].text;
+            const selectedValue = paymentSelect.value;
             
             // 右側のラベルを書き換える
             displayLabel.textContent = selectedText;
+
+            document.getElementById('hidden-payment-method').value = selectedValue;
         });
     });
 </script>

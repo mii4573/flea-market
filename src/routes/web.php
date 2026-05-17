@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['web'])->group(function () {
 
     // 商品関連
-    Route::get('/', [ItemController::class, 'index'])->name('index');
+    Route::get('/', [ItemController::class, 'index'])->name('item.index');
     Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('item.show');
 
     // 会員登録
@@ -40,6 +40,23 @@ Route::middleware(['web'])->group(function () {
     // 購入確認画面
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'index'])->name('purchase.index');
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])
-        ->middleware('auth')
-        ->name('purchase.store');
+    ->middleware('auth')
+    ->name('purchase.store');
+    Route::get('/purchase/checkout/{item_id}', [PurchaseController::class, 'checkout'])
+    ->middleware('auth')
+    ->name('purchase.checkout');
+    Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'success'])
+    ->middleware('auth')
+    ->name('purchase.success');
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address.edit');
+    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
+
+    Route::middleware('auth')->group(function () {
+    // 1. 出品画面を表示するルート
+    Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
+    
+    // 2. 出品ボタンを押した時に、データを保存するルート（POST）
+    Route::post('/sell', [ItemController::class, 'store'])->name('item.store');
+    });
+
 });

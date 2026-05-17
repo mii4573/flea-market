@@ -1,0 +1,212 @@
+/* 全体の外枠コンテナ */
+.exhibit-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 40px 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    font-family: sans-serif;
+}
+
+.exhibit-container h2 {
+    text-align: center;
+    margin-bottom: 35px;
+    color: #333333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #444444;
+    font-size: 14px;
+}
+
+/* -------------------------------------------
+ * 1. 画像アップロード（中央ボタン配置）
+ * ------------------------------------------- */
+.file-input-wrapper {
+    display: flex;
+    justify-content: center;
+    /* 横方向の中央寄せ */
+    align-items: center;
+    padding: 30px 10px;
+    background: #fafafa;
+    border: 1px dashed #cccccc;
+    border-radius: 8px;
+}
+
+/* 本物のダサい「選択されていません」を非表示にする */
+.form-file-hidden {
+    display: none;
+}
+
+/* 綺麗な赤い枠付きボタン */
+.file-custom-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    border: 1px solid #ff5555;
+    border-radius: 4px;
+    color: #ff5555;
+    font-weight: bold;
+    font-size: 14px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.file-custom-btn:hover {
+    background: rgba(255, 85, 85, 0.05);
+}
+
+/* -------------------------------------------
+ * 2 & 5. 項目区切り（アンダーライン）
+ * ------------------------------------------- */
+.section-title {
+    margin: 35px 0 20px 0;
+    border-bottom: 1px solid #dddddd;
+    /* 薄いグレーのアンダーライン */
+    padding-bottom: 8px;
+}
+
+.section-title h3 {
+    font-size: 16px;
+    color: #666666;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* -------------------------------------------
+ * 3. カテゴリー（メルカリ風：赤ライン ➡️ 選択時赤ベタ白文字）
+ * ------------------------------------------- */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+}
+
+.category-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.category-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 未選択状態：白い背景に赤枠・赤文字 */
+.category-badge {
+    display: block;
+    padding: 10px 12px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #ff5555;
+    /* 赤いライン */
+    border-radius: 20px;
+    font-size: 13px;
+    color: #ff5555;
+    /* 赤文字 */
+    font-weight: bold;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+/* 選択（チェック）された状態：ボタンの色が赤になり、文字が白くなる */
+.category-checkbox:checked+.category-badge {
+    background: #ff5555;
+    /* ボタンの色が赤 */
+    border-color: #ff5555;
+    color: #ffffff;
+    /* 文字が白 */
+}
+
+/* -------------------------------------------
+ * 4 & 6. 共通入力フォーム
+ * ------------------------------------------- */
+.form-control {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #333333;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: #ff5555;
+    box-shadow: 0 0 0 3px rgba(255, 85, 85, 0.15);
+    outline: none;
+}
+
+.textarea-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* 価格入力 */
+.price-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.price-currency {
+    position: absolute;
+    left: 14px;
+    font-size: 18px;
+    color: #333333;
+    font-weight: bold;
+}
+
+.price-input-container .form-control {
+    padding-left: 32px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* エラー装飾 */
+.form-control.has-error,
+.file-input-wrapper.has-error {
+    border-color: #ff4d4f !important;
+    background-color: #fffbfa;
+}
+
+.error-text {
+    color: #ff4d4f;
+    font-size: 13px;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+/* 出品ボタン */
+.btn-exhibit {
+    width: 100%;
+    padding: 14px;
+    margin-top: 30px;
+    background: #ff5555;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 85, 85, 0.2);
+    transition: all 0.2s ease;
+}
+
+.btn-exhibit:hover {
+    background: #e04444;
+}

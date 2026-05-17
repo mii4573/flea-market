@@ -46,9 +46,14 @@
                 <tr>
                     <th>カテゴリー</th>
                     <td>
-                        @isset($item->category)
-                                <span class="category-tag">{{ $item->category->name }}</span>
-                        @endisset
+                       {{-- 💡 $item->categories（複数形）が存在し、かつ1件以上ある場合のみループを回します --}}
+                       @if($item->categories && $item->categories->count() > 0)
+                       @foreach($item->categories as $category)
+                        <span class="category-tag" style="margin-right: 5px;">{{ $category->name }}</span>
+                      @endforeach
+                      @else
+                        <span style="color: #999;">未設定</span>
+                      @endif 
                     </td>
                 </tr>
 
