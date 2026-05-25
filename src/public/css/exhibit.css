@@ -1,212 +1,200 @@
-/* 全体の外枠コンテナ */
+@charset "utf-8";
+
+/* ==========================================================================
+   1. 全体のレイアウト・コンテナ
+   ========================================================================== */
 .exhibit-container {
     max-width: 600px;
     margin: 40px auto;
-    padding: 40px 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 0 20px;
     font-family: sans-serif;
 }
 
 .exhibit-container h2 {
-    text-align: center;
-    margin-bottom: 35px;
-    color: #333333;
     font-size: 24px;
     font-weight: bold;
+    text-align: center;
+    color: #333333;
+    margin-bottom: 40px;
 }
 
+/* フォームグループ */
 .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .form-label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #444444;
     font-size: 14px;
+    font-weight: bold;
+    color: #444444;
+    margin-bottom: 12px;
 }
 
-/* -------------------------------------------
- * 1. 画像アップロード（中央ボタン配置）
- * ------------------------------------------- */
+/* 入力コントロール基本設定 */
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+.form-control:focus {
+    border-color: #ff5555;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 85, 85, 0.15);
+}
+
+.textarea-control {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   2. 各専用コンポーネント（画像・カテゴリ・価格）
+   ========================================================================== */
+
+/* 1. 商品画像アップロード（破線枠・中央配置） */
 .file-input-wrapper {
-    display: flex;
-    justify-content: center;
-    /* 横方向の中央寄せ */
-    align-items: center;
-    padding: 30px 10px;
-    background: #fafafa;
-    border: 1px dashed #cccccc;
-    border-radius: 8px;
+    border: 2px dashed #cccccc;
+    border-radius: 6px;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: border-color 0.2s;
 }
 
-/* 本物のダサい「選択されていません」を非表示にする */
+.file-input-wrapper:hover {
+    border-color: #ff5555;
+}
+
+.file-custom-btn {
+    cursor: pointer;
+    display: block;
+}
+
+.file-custom-btn span {
+    display: inline-block;
+    padding: 8px 24px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333333;
+    font-weight: 500;
+}
+
 .form-file-hidden {
     display: none;
 }
 
-/* 綺麗な赤い枠付きボタン */
-.file-custom-btn {
-    display: inline-block;
-    padding: 10px 24px;
-    border: 1px solid #ff5555;
-    border-radius: 4px;
-    color: #ff5555;
-    font-weight: bold;
-    font-size: 14px;
-    background: #ffffff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.file-custom-btn:hover {
-    background: rgba(255, 85, 85, 0.05);
-}
-
-/* -------------------------------------------
- * 2 & 5. 項目区切り（アンダーライン）
- * ------------------------------------------- */
+/* 2. セクションタイトル（アンダーライン付き） */
 .section-title {
-    margin: 35px 0 20px 0;
+    margin-top: 40px;
+    margin-bottom: 24px;
     border-bottom: 1px solid #dddddd;
-    /* 薄いグレーのアンダーライン */
     padding-bottom: 8px;
 }
 
 .section-title h3 {
     font-size: 16px;
-    color: #666666;
     font-weight: bold;
+    color: #666666;
     margin: 0;
 }
 
-/* -------------------------------------------
- * 3. カテゴリー（メルカリ風：赤ライン ➡️ 選択時赤ベタ白文字）
- * ------------------------------------------- */
+/* 3. カテゴリ（グリッド配置・チェックボックス隠し） */
 .category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .category-item {
-    position: relative;
     cursor: pointer;
 }
 
 .category-checkbox {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+    display: none;
+    /* 本物のチェックボックスは隠す */
 }
 
-/* 未選択状態：白い背景に赤枠・赤文字 */
+/* メルカリ風バッジの初期状態 */
 .category-badge {
-    display: block;
-    padding: 10px 12px;
-    text-align: center;
-    background: #ffffff;
-    border: 1px solid #ff5555;
-    /* 赤いライン */
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
     border-radius: 20px;
     font-size: 13px;
-    color: #ff5555;
-    /* 赤文字 */
-    font-weight: bold;
-    transition: all 0.2s ease;
+    color: #333333;
+    transition: all 0.2s;
     user-select: none;
 }
 
-/* 選択（チェック）された状態：ボタンの色が赤になり、文字が白くなる */
+/* チェックが入ったときの反転スタイル */
 .category-checkbox:checked+.category-badge {
-    background: #ff5555;
-    /* ボタンの色が赤 */
+    background-color: #ff5555;
     border-color: #ff5555;
     color: #ffffff;
-    /* 文字が白 */
 }
 
-/* -------------------------------------------
- * 4 & 6. 共通入力フォーム
- * ------------------------------------------- */
-.form-control {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #cccccc;
-    border-radius: 6px;
-    font-size: 15px;
-    color: #333333;
-    background-color: #ffffff;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
-}
-
-.form-control:focus {
-    border-color: #ff5555;
-    box-shadow: 0 0 0 3px rgba(255, 85, 85, 0.15);
-    outline: none;
-}
-
-.textarea-control {
-    resize: vertical;
-    min-height: 120px;
-}
-
-/* 価格入力 */
+/* 4. 価格入力エリア */
 .price-input-container {
-    position: relative;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .price-currency {
     position: absolute;
-    left: 14px;
-    font-size: 18px;
-    color: #333333;
+    left: 16px;
+    font-size: 16px;
     font-weight: bold;
+    color: #333333;
 }
 
 .price-input-container .form-control {
-    padding-left: 32px;
-    font-size: 18px;
-    font-weight: bold;
+    padding-left: 36px;
+    /* ￥マークの分だけ左に余白を空ける */
 }
 
-/* エラー装飾 */
-.form-control.has-error,
-.file-input-wrapper.has-error {
-    border-color: #ff4d4f !important;
-    background-color: #fffbfa;
-}
+/* ==========================================================================
+   3. ボタン・エラー表示
+   ========================================================================== */
 
-.error-text {
-    color: #ff4d4f;
-    font-size: 13px;
-    margin-top: 6px;
-    font-weight: 500;
-}
-
-/* 出品ボタン */
+/* 出品するボタン：購入ボタン等と同じ赤に統一 */
 .btn-exhibit {
     width: 100%;
-    padding: 14px;
-    margin-top: 30px;
-    background: #ff5555;
+    padding: 16px;
+    background-color: #ff5555;
     color: #ffffff;
     font-size: 16px;
     font-weight: bold;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(255, 85, 85, 0.2);
-    transition: all 0.2s ease;
+    transition: background-color 0.2s;
+    margin-top: 20px;
 }
 
 .btn-exhibit:hover {
-    background: #e04444;
+    background-color: #e04444;
+}
+
+/* バリデーションエラー用 */
+.has-error {
+    border-color: #ff5555 !important;
+    background-color: #fff8f8;
+}
+
+.error-text {
+    font-size: 13px;
+    color: #ff5555;
+    margin: 6px 0 0 0;
+    font-weight: 500;
 }

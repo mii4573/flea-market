@@ -14,12 +14,14 @@ body {
     background-color: #000000;
     color: #ffffff;
     padding: 15px 40px;
+    min-width: max-content;
 }
 
 .header__inner {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* 横並びで均等配置 */
+    justify-content: space-between;
+    /* 横並びで均等配置 */
     max-width: 1200px;
     margin: 0 auto;
     gap: 20px;
@@ -36,16 +38,24 @@ body {
 .header__search {
     flex: 1;
     margin: 0 20px;
-    min-width: 300px;
+    /* 💡 左右の余白を少し広げてバランスを調整 */
+    min-width: 200px;
+    /* 💡 最低限の横幅を大きく確保 */
 }
 
-.search-input {
+/* 💡 クラス名をBlade側の input タグに合わせるか、以下のように input 自体に指定すると確実です */
+.header__search input[type="text"] {
     width: 100%;
-    padding: 10px 15px;
+    padding: 12px 15px;
+    /* 💡 上下のパディングを増やして検索窓を太く・大きく */
+    font-size: 16px;
+    /* 💡 文字サイズを少し大きく */
     border-radius: 5px;
     border: none;
     background-color: #ffffff;
     color: #000000;
+    outline: none;
+    /* クリックした時の青い枠線を消す */
 }
 
 /* ナビゲーション（黒背景に白文字） */
@@ -53,34 +63,57 @@ body {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 15px;
+    gap: 20px;
+    /* 💡 各リンクの間隔を少し広げて見やすく */
     white-space: nowrap;
 }
 
-.nav-link {
-    color: #ffffff;
+/* 💡 ログイン・マイページ・ログアウトボタン共通の白文字設定 */
+.nav-list .nav-item a,
+.nav-list .nav-item button {
+    color: #ffffff !important;
+    /* 💡 訪問済みの紫に負けないよう白文字を強制 */
     text-decoration: none;
     font-weight: bold;
-    background: none;
-    border: none;
-    cursor: pointer;
     font-size: 15px;
     white-space: nowrap;
+    background: none;
+    /* ログアウトボタン用の背景リセット */
+    border: none;
+    /* ログアウトボタン用の枠線リセット */
+    cursor: pointer;
+    font-family: inherit;
+    /* ログアウトボタンのフォントのズレを防止 */
+    padding: 0;
 }
 
-/* 出品ボタン（白背景に赤文字または黒文字） */
-.btn-sell {
-    background-color: #ffffff;
-    color: #ff0000; /* 目立つように赤にしていますが、黒にするなら #000000 */
-    padding: 6px 20px;
+/* リンクにマウスを乗せたときの調整 */
+.nav-list .nav-item a:hover,
+.nav-list .nav-item button:hover {
+    opacity: 0.8;
+}
+
+/* 💡 出品ボタン（白背景に黒文字） */
+.nav-list .nav-item--btn a {
+    background-color: #ffffff !important;
+    /* 💡 背景を真っ白に固定 */
+    color: #000000 !important;
+    /* 💡 文字を真っ黒に固定 */
+    padding: 8px 24px;
+    /* 💡 横幅と縦幅の余白をきれいな黄金比に調整 */
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
     white-space: nowrap;
+    display: inline-block;
+    /* ボタンとしての余白（padding）を有効化 */
 }
 
-.btn-sell:hover {
-    opacity: 0.8;
+/* 出品ボタンにマウスを乗せたとき */
+.nav-list .nav-item--btn a:hover {
+    background-color: #f0f0f0 !important;
+    /* ほんのりグレーにしてクリック感を出す */
+    opacity: 1;
 }
 
 /* コンテナ設定 */
@@ -107,7 +140,8 @@ body {
 }
 
 .tab-item.active {
-    color: #ff0000; /* アクティブなタブの色（赤など） */
+    color: #ff0000;
+    /* アクティブなタブの色（赤など） */
 }
 
 .tab-item.active::after {
@@ -124,26 +158,32 @@ body {
 .item-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* カード間の隙間 */
+    gap: 20px;
+    /* カード間の隙間 */
 }
 
 .item-card {
-    width: calc(25% - 15px); /* 100% / 4枚 - 隙間分 */
+    width: calc(25% - 15px);
+    /* 100% / 4枚 - 隙間分 */
     margin-bottom: 20px;
 }
 
 .item-image {
     width: 100%;
-    aspect-ratio: 1 / 1; /* 正方形を維持 */
+    aspect-ratio: 1 / 1;
+    /* 正方形を維持 */
     background-color: #f5f5f5;
     overflow: hidden;
     border-radius: 8px;
+    position: relative;
+    /* 💡 下の記述と重複していたので統合 */
 }
 
 .item-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 画像を枠いっぱいに収める */
+    object-fit: cover;
+    /* 画像を枠いっぱいに収める */
 }
 
 .item-info {
@@ -161,13 +201,6 @@ body {
     .item-card {
         width: calc(50% - 10px);
     }
-}
-
-.item-image {
-    position: relative;
-    /* 親要素を基準にする */
-    overflow: hidden;
-    /* はみ出た部分を隠す */
 }
 
 .sold-label {

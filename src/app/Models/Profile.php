@@ -15,7 +15,7 @@ class Profile extends Model
         'post_code',
         'address',
         'building',
-        'image_path', // プロフィール画像などがあれば
+        'image_path', 
     ];
 
     public function user()

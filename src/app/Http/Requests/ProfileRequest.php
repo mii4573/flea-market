@@ -36,11 +36,14 @@ class ProfileRequest extends FormRequest
     public function messages(): array
     {
         return [
-          'display_name.required' => 'ユーザー名を入力してください。',
-        'display_name.max'      => 'ユーザー名は20文字以内で入力してください。',
-        'post_code.required'    => '郵便番号を入力してください。',
-        'post_code.regex'       => '郵便番号はハイフンありの8文字（例: 123-4567）で入力してください。',
-        'address.required'      => '住所を入力してください。',  
+            
+            'image.mimes'           => 'プロフィール画像の拡張子は.jpegもしくは.png形式で選択してください。',
+            'image.image'           => 'アップロードされたファイルは画像形式で選択してください。',
+            'display_name.required' => 'ユーザー名を入力してください。',
+            'display_name.max'      => 'ユーザー名は20文字以内で入力してください。',
+            'post_code.required'    => '郵便番号を入力してください。',
+            'post_code.regex'       => '郵便番号はハイフンありの8文字で入力してください。',
+            'address.required'      => '住所を入力してください。',  
         ];
     }
 }

@@ -7,7 +7,7 @@
     <title>@yield('title', 'COACHTECH')</title>
 
     <!-- CSS (Google Fontsや自作CSS) -->
-    <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}"> {{-- リセットCSSがあれば --}}
+    <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     @stack('css') 
 </head>
@@ -20,9 +20,10 @@
                 </a>
             </div>
 
+            <!-- 💡 【FN016】現在開いているURL（/ または /mylist）に対して検索キーワードを送信する -->
             <div class="header__search">
-                <form action="/search" method="GET">
-                    <input type="text" name="keyword" placeholder="なにをお探しですか？">
+                <form action="{{ Request::is('mylist') ? url('/mylist') : url('/') }}" method="GET">
+                    <input type="text" name="keyword" placeholder="なにをお探しですか？" value="{{ $keyword ?? '' }}">
                 </form>
             </div>
 
@@ -34,13 +35,14 @@
                         <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit">ログアウト</button>
+                                <button type="submit" style="background:none; border:none; cursor:pointer;">ログアウト</button>
                             </form>
                         </li>
                         <li class="nav-item"><a href="/mypage">マイページ</a></li>
                     @else
                         {{-- ログアウト中のみ表示 --}}
                         <li class="nav-item"><a href="/login">ログイン</a></li>
+                        <!-- 💡 表記は「マイページ」のまま、遷移先だけ会員登録（/register）に指定 -->
                         <li class="nav-item"><a href="/register">マイページ</a></li>
                     @endauth
                     <li class="nav-item nav-item--btn"><a href="/sell">出品</a></li>

@@ -1,5 +1,6 @@
-/* public/css/mypage.css */
-
+/* ==========================================================================
+   プロフィール情報エリア
+   ========================================================================== */
 .profile-header {
     display: flex;
     align-items: center;
@@ -9,16 +10,19 @@
     background: #fff;
 }
 
-.profile-image img {
+/* 丸型アバターの設定 */
+.profile-circle,
+.profile-circle-default {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    /* 正円にする */
     object-fit: cover;
-    /* 画像の比率を崩さず収める */
+    display: block;
+}
+
+.profile-circle-default {
     background-color: #e0e0e0;
     /* 画像がない時のグレー色 */
-    display: block;
 }
 
 .user-name {
@@ -27,14 +31,24 @@
     flex-grow: 1;
 }
 
-.btn-outline-danger {
+/* プロフィールを編集ボタン */
+.btn-edit-profile {
     color: #ff4d4d;
     border: 2px solid #ff4d4d;
     padding: 8px 16px;
     text-decoration: none;
     border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s;
 }
 
+.btn-edit-profile:hover {
+    background-color: #fff5f5;
+}
+
+/* ==========================================================================
+   タブメニュー
+   ========================================================================== */
 .tabs {
     display: flex;
     border-bottom: 2px solid #eee;
@@ -45,6 +59,7 @@
     padding: 10px 30px;
     text-decoration: none;
     color: #666;
+    font-weight: bold;
 }
 
 .tab-item.active {
@@ -52,9 +67,12 @@
     border-bottom: 2px solid #ff4d4d;
 }
 
+/* ==========================================================================
+   商品一覧グリッド（PC・標準表示：4カラム）
+   ========================================================================== */
 .item-grid {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     margin-top: 20px;
     width: 100%;
@@ -62,16 +80,78 @@
 
 .item-card {
     width: 100%;
+    position: relative;
+    /* 💡 PC画面でもSOLDの基準点にするためにメディアクエリの外へ移動！ */
 }
 
-.item-card img {
+.item-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* 💡 商品画像の親要素（ここを基準にSOLDを重ねる） */
+.item-image {
+    position: relative;
     width: 100%;
     aspect-ratio: 1/1;
-    object-fit: cover;
+    overflow: hidden;
     border-radius: 4px;
-    padding: 0;
 }
 
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s;
+}
+
+.item-card:hover .item-image img {
+    transform: scale(1.02);
+    /* ホバー時に少しだけ画像を大きくする上品な演出 */
+}
+
+.item-info {
+    margin-top: 8px;
+}
+
+.item-name {
+    font-size: 14px;
+    color: #333;
+    display: block;
+}
+
+/* 💡 SOLDラベル（PC・スマホ共通で絶対にズレない設定） */
+.sold-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 77, 77, 0.9);
+    /* ブランドの赤 */
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-top-left-radius: 4px;
+    /* 画像の角丸に合わせる */
+    border-bottom-right-radius: 4px;
+    /* 右下を少し丸める */
+    z-index: 5;
+    /* 画像より手前に表示 */
+}
+
+/* データがない時の文言 */
+.empty-message {
+    color: #888888;
+    font-size: 16px;
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 0;
+}
+
+/* ==========================================================================
+   レスポンシブ対応（画面幅が狭いとき：2カラム）
+   ========================================================================== */
 @media (max-width: 768px) {
     .item-grid {
         grid-template-columns: repeat(2, 1fr);

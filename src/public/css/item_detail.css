@@ -1,115 +1,265 @@
-/* 商品詳細ページの全体レイアウト */
+@charset "utf-8";
+
+/* ==========================================================================
+   1. 全体のレイアウト・コンテナ
+   ========================================================================== */
 .item-detail-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
     display: flex;
     gap: 40px;
-    padding: 40px;
+    font-family: sans-serif;
+}
+
+/* スマホ・タブレットなどの画面幅が狭いときは縦並びにする */
+@media (max-width: 768px) {
+    .item-detail-container {
+        flex-direction: column;
+        gap: 20px;
+    }
 }
 
 /* 左側：商品画像エリア */
 .item-image {
     flex: 1;
+    position: relative;
+    max-height: 500px;
+    background-color: #f6f6f6;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     align-self: flex-start;
 }
 
 .item-image img {
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
+/* ✨ 斜めリボンの洗練された SOLD OUT ラベル */
 .sold-label {
     position: absolute;
     top: 0;
     left: 0;
-    background: red;
-    color: white;
-    padding: 10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 120px 120px 0 0;
+    border-color: #ff5555 transparent transparent transparent;
+    z-index: 2;
+    padding: 0;
+    /* 元の簡易ラベルのpaddingをリセット */
+}
+
+.sold-label::after {
+    content: "SOLD";
+    position: absolute;
+    top: -100px;
+    left: 10px;
+    color: #ffffff;
+    font-size: 18px;
     font-weight: bold;
+    transform: rotate(-45deg);
+    display: block;
+    width: 60px;
+    text-align: center;
 }
 
 /* 右側：商品情報エリア */
 .item-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-info h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    color: #333333;
 }
 
 .brand-name {
-    color: #666;
+    font-size: 14px;
+    color: #666666;
+    background: #f5f5f5;
+    padding: 4px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+    margin: 0 0 16px 0;
 }
 
 .price {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
+    color: #333333;
+    margin: 0 0 20px 0;
 }
 
-/* いいね・コメントアイコン */
+/* ==========================================================================
+   2. いいね・コメントのカウントアイコン
+   ========================================================================== */
 .stats {
-    margin: 20px 0;
     display: flex;
     gap: 20px;
+    margin: 0 0 24px 0;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 16px;
 }
 
 .icon-group {
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
 }
 
 .icon-group img {
     width: 24px;
     height: 24px;
-    cursor: pointer;
+    margin-bottom: 4px;
+    transition: transform 0.2s;
+}
+
+.icon-group:hover img {
+    transform: scale(1.1);
 }
 
 .icon-count {
-    font-size: 14px;
-    color: #333;
+    font-size: 12px;
+    color: #666666;
     margin-top: 4px;
 }
 
-/* 購入ボタン */
+/* ==========================================================================
+   3. 購入ボタン・商品説明・情報テーブル
+   ========================================================================== */
 .btn-buy {
     display: block;
+    width: 100%;
     text-align: center;
-    background: #ff4d4d;
-    color: white;
-    padding: 15px;
-    text-decoration: none;
+    padding: 14px;
+    background-color: #ff5555;
+    color: #ffffff;
+    font-size: 16px;
     font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(255, 85, 85, 0.2);
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+.btn-buy:hover {
+    background-color: #e04444;
+}
+
+/* ✨ 各セクション共通の太アンダーライン見出し */
+.description h3,
+.details h3,
+.comment-section h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    margin: 0 0 12px 0;
+    border-bottom: 2px solid #333333;
+    padding-bottom: 6px;
+    width: fit-content;
+}
+
+.description {
     margin-bottom: 30px;
 }
 
-/* カテゴリータグ */
+.description p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444444;
+    white-space: pre-wrap;
+    /* 改行コードをそのまま反映 */
+    margin: 0;
+}
+
+/* 商品の情報テーブル */
+.details {
+    margin-bottom: 40px;
+}
+
+.details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+.details th,
+.details td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+    text-align: left;
+}
+
+.details th {
+    width: 30%;
+    color: #666666;
+    font-weight: bold;
+}
+
+.details td {
+    color: #333333;
+}
+
+/* ✨ 出品画面と世界観を統一したメルカリ風カテゴリーバッジ */
 .category-tag {
-    background: #eee;
-    padding: 5px 10px;
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: rgba(255, 85, 85, 0.06);
+    /* ほんのり赤い背景 */
+    color: #ff5555;
+    /* 赤文字 */
+    border: 1px solid rgba(255, 85, 85, 0.3);
     border-radius: 15px;
-    margin-right: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.text-muted {
+    color: #999999;
     font-size: 14px;
 }
 
-/* コメントセクション */
-.comment-item {
-    margin-bottom: 20px;
-    border-bottom: 1px dashed #ccc;
-    padding-bottom: 10px;
-}
-
-/* コメントセクション全体 */
+/* ==========================================================================
+   4. コメントセクション
+   ========================================================================== */
 .comment-section {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
-.comment-section h3 {
-    font-size: 18px;
-    margin-bottom: 20px;
+.comment-list {
+    margin-bottom: 30px;
+    max-height: 400px;
+    /* コメントが大量になっても購入ボタンを押しやすくするための制限 */
+    overflow-y: auto;
+    padding-right: 10px;
 }
 
-/* コメント一つひとつのスタイル */
 .comment-item {
-    margin-bottom: 25px;
+    margin-bottom: 24px;
+    border-bottom: none;
+    /* 下線をなくし、塊として見せるスタイルへ洗練 */
+    padding-bottom: 0;
 }
 
+/* ユーザー情報（アイコンと名前） */
 .comment-user {
     display: flex;
     align-items: center;
@@ -118,12 +268,14 @@
 }
 
 .user-icon {
-    width: 35px;
-    height: 35px;
-    background-color: #ddd;
-    /* 画像がない時の仮色 */
+    width: 40px;
+    height: 40px;
+    background-color: #e0e0e0;
     border-radius: 50%;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-icon img {
@@ -134,49 +286,110 @@
 
 .user-name {
     font-weight: bold;
+    color: #333333;
     font-size: 14px;
 }
 
-.comment-content {
+/* ✨ 重複を排除し一本化したコメントテキストボックス */
+.comment-text-box {
     background-color: #f5f5f5;
     padding: 15px;
     border-radius: 8px;
+    color: #333333;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
+    word-break: break-all;
+    /* 長いURLや英単語が来ても枠外に突き抜けないお守り */
 }
 
-/* コメントフォーム */
+/* コメント投稿フォーム */
 .comment-form {
     margin-top: 40px;
 }
 
 .comment-form p {
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 10px;
+    color: #444444;
+    margin: 0 0 8px 0;
 }
 
 .comment-textarea {
     width: 100%;
-    height: 120px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: none;
-    /* 大きさを固定 */
-    margin-bottom: 15px;
+    height: 100px;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 14px;
+    resize: vertical;
+    /* 縦方向のみ自由にサイズ変更可能にする */
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+.comment-textarea:focus {
+    border-color: #ff5555;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 85, 85, 0.15);
 }
 
 .btn-comment {
     width: 100%;
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 15px;
+    padding: 14px;
+    background-color: #333333;
+    /* ボタンの明暗にメリハリをつけるためシックな黒ベースに */
+    color: #ffffff;
+    font-size: 14px;
     font-weight: bold;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .btn-comment:hover {
-    opacity: 0.9;
+    background-color: #555555;
+    opacity: 1;
+}
+
+/* --- エラーメッセージのスタイル --- */
+.comment-form .error-message {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* --- 未ログイン時の案内ボックスのスタイル --- */
+.comment-form .guest-notice {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.comment-form .guest-notice p {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666666;
+}
+
+/* ログイン画面へ戻るボタンの幅を自動調整 */
+.comment-form .guest-notice .btn-comment {
+    display: inline-block;
+    text-decoration: none;
+    width: auto;
+    padding: 10px 30px;
+}
+
+/* 画像がないときの綺麗なグレーの丸 */
+.comment-user .user-icon .no-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    /* 好きなグレーの濃さに調整してください */
+    border-radius: 50%;
 }

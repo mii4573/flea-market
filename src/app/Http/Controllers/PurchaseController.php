@@ -42,7 +42,7 @@ class PurchaseController extends Controller
 
         $temp = session('temp_shipping');
         if ((!$profile || !$profile->post_code || !$profile->address) && !$temp) {
-          return back()->with('error', '配送先情報が登録されていません。');
+            return back()->with('error', '配送先情報が登録されていません。');
         }  
         
         $request->validate([
@@ -53,10 +53,9 @@ class PurchaseController extends Controller
 
         // ★ 支払い方法によって分岐
         if ($request->payment_method === 'クレジットカード') {
-           // カード決済の場合は、一度Stripeのセッション作成へ（データを引き継ぐ）
-           // セッション等に支払い方法を一時保存しておくとsuccessで使いやすいです
-           session(['payment_method' => 'クレジットカード']);
-           return redirect()->route('purchase.checkout', ['item_id' => $item_id]);
+            // カード決済の場合は、一度Stripeのセッション作成へ（データを引き継ぐ）
+            session(['payment_method' => 'クレジットカード']);
+            return redirect()->route('purchase.checkout', ['item_id' => $item_id]);
         }
    
         Purchase::create([
@@ -68,8 +67,8 @@ class PurchaseController extends Controller
             'shipping_building'  => $request->session()->get('temp_shipping.building')  ?? Auth::user()->profile->building,
         ]);
 
-            session()->forget('temp_shipping');
-            return redirect()->route('index')->with('message', '購入が完了しました');
+        session()->forget('temp_shipping');
+        return redirect()->route('item.index')->with('message', '購入が完了しました');
     }
 
     public function checkout($item_id)
@@ -103,7 +102,6 @@ class PurchaseController extends Controller
 
     public function success(Request $request, $item_id)
     {
-
         // ★ Stripeから戻ってきた時にDBに保存する
         $user = Auth::user();
         $profile = $user->profile;
@@ -116,36 +114,36 @@ class PurchaseController extends Controller
         ]);
 
         Purchase::create([
-          'user_id' => Auth::id(),
-          'item_id' => $item_id,
-          'payment_method' => session('payment_method', 'クレジットカード'), // セッションから取得
-          // ★セッションまたはプロフィールから判定された正しい住所を保存する
-          'shipping_post_code' => $shipping['post_code'],
-          'shipping_address'   => $shipping['address'],
-          'shipping_building'  => $shipping['building'],
+            'user_id' => Auth::id(),
+            'item_id' => $item_id,
+            'payment_method' => session('payment_method', 'クレジットカード'),
+            // ★セッションまたはプロフィールから判定された正しい住所を保存する
+            'shipping_post_code' => $shipping['post_code'],
+            'shipping_address'   => $shipping['address'],
+            'shipping_building'  => $shipping['building'],
         ]);
 
-        session()->forget(['payment_method','temp_shipping']);
+        session()->forget(['payment_method', 'temp_shipping']);
     
-        return view('purchase.success'); // 成功画面（後で作ります）
+        // 成功画面は挟まず、商品一覧画面へ直接リダイレクトするに変更
+        return redirect()->route('item.index')->with('message', '購入が完了しました');
     }
 
     public function editAddress($item_id)
-   {
-      $item = Item::findOrFail($item_id);
-      $profile = session('temp_shipping') ? (object)session('temp_shipping') : Auth::user()->profile;
-      return view('purchase.address_edit', compact('item', 'profile'));
-   }
+    {
+        $item = Item::findOrFail($item_id);
+        $profile = session('temp_shipping') ? (object)session('temp_shipping') : Auth::user()->profile;
+        return view('purchase.address_edit', compact('item', 'profile'));
+    }
 
     public function updateAddress(AddressRequest $request, $item_id)
     {
-       
-       session(['temp_shipping' => [
-         'post_code' => $request->post_code,
-         'address' => $request->address,
-         'building' => $request->building,
-       ]]);
+        session(['temp_shipping' => [
+            'post_code' => $request->post_code,
+            'address' => $request->address,
+            'building' => $request->building,
+        ]]);
 
-      return redirect()->route('purchase.index', ['item_id' => $item_id]);
+        return redirect()->route('purchase.index', ['item_id' => $item_id]);
     }
 }

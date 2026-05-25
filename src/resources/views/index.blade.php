@@ -4,15 +4,18 @@
 <div class="container">
     
     <div class="tabs">
-        <a href="/" class="tab-item {{ !request('tab') || request('tab') == 'recommend' ? 'active' : '' }}">おすすめ</a>
+        <!-- 💡 おすすめタブ：リンク先を「/」にして、検索キーワードがあれば引き継ぐ -->
+        <a href="{{ url('/' . ( !empty($keyword) ? '?keyword=' . urlencode($keyword) : '' )) }}" 
+           class="tab-item {{ !Request::is('mylist') ? 'active' : '' }}">おすすめ</a>
         
         @auth
-
-            <a href="/?tab=mylist" class="tab-item {{ request('tab') == 'mylist' ? 'active' : '' }}">マイリスト</a>
+            <!-- 💡 マイリストタブ：リンク先を「/mylist」にして、検索キーワードがあれば引き継ぐ -->
+            <a href="{{ url('/mylist' . ( !empty($keyword) ? '?keyword=' . urlencode($keyword) : '' )) }}" 
+               class="tab-item {{ Request::is('mylist') ? 'active' : '' }}">マイリスト</a>
         @endauth
     </div>
 
-        <div class="item-grid">
+    <div class="item-grid">
         @foreach($items as $item)
             <div class="item-card">
                 <a href="/item/{{ $item->id }}">
