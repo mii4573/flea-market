@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -24,8 +25,12 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // 「新規ユーザーが登録された（だから認証メールを送って）」と通知する
+        event(new Registered($user));
+
         Auth::login($user);
 
-        return redirect()->route('profile.edit');
+        // プロフィール画面ではなく、まずは「メール確認誘導画面」へリダイレクト
+        return redirect()->route('verification.notice');
     }
 }

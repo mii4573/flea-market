@@ -38,7 +38,7 @@ Route::middleware(['web'])->group(function () {
     // ----------------------------------------------------
     // ログイン必須（authミドルウェア）のルート
     // ----------------------------------------------------
-    Route::middleware(['auth','verified'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
         
         // マイページ・ユーザープロフィール関連
         Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage');
@@ -46,7 +46,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 
         // マイリスト表示
-        Route::get('/mylist', [ItemController::class, 'mylist'])->name('item.mylist');
+        //Route::get('/mylist', [ItemController::class, 'mylist'])->name('item.mylist');
 
         // 商品コメント投稿
         Route::post('/item/{item_id}/comment', [ItemController::class, 'storeComment'])->name('comment.store');

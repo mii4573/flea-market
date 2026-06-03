@@ -13,7 +13,7 @@
         @endisset
 
         @if($item->purchase)
-            <div class="sold-label">SOLD</div>
+            <div class="detail-sold-ribbon"></div>
         @endif
     </div>
 

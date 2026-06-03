@@ -15,12 +15,34 @@ class ItemController extends Controller
 {
     public function index(Request $request)
     {
+        // 1. 現在選択されているタブ（?tab=mylist なのか、未指定＝おすすめ なのか）を取得
+        $tab = $request->query('tab');
+
+        // 2. 共通のクエリの土台（リレーションの読み込み）
         $query = Item::with('purchase');
-        if (Auth::check()){
+        //if (Auth::check()){
             $query->where('seller_id', '!=', Auth::id()); 
+        //}
+
+        // 3. タブが「mylist」の場合のデータ取得ロジック
+        if ($tab === 'mylist') {
+            // 未ログインならログイン画面へ（元々のmylist関数のガードを移植）
+            if (!Auth::check()) {
+                return redirect()->route('login');
+            }
+            // 自分が「いいね」した商品のみに絞り込む
+            $query->whereHas('likes', function ($q) {
+                $q->where('user_id', Auth::id());
+            });
+        }else {
+            // 4. 通常のトップ画面（おすすめ）のデータ取得ロジック
+            // ログイン中なら、自分がNum1（出品者）ではない商品を条件にする
+            if (Auth::check()){
+                $query->where('seller_id', '!=', Auth::id()); 
+            }
         }
 
-        // 💡 【FN016】トップ画面（おすすめ）でも商品名での部分一致検索を有効にする
+        // 5. 【共通処理】商品名での部分一致検索（おすすめ・マイリスト両方で有効）
         $keyword = $request->input('keyword');
         if (!empty($keyword)) {
             $query->where('name', 'LIKE', "%{$keyword}%");
@@ -28,8 +50,10 @@ class ItemController extends Controller
 
         $items = $query->get();
 
-        // 💡 状態保持（タブ切り替え時のリンク用）のために $keyword も一緒に渡す
-        return view('index', compact('items', 'keyword'));
+        // 6. 状態保持のために $items, $keyword に加え、$tab もビューに渡す
+        return view('index', compact('items', 'keyword', 'tab'));
+
+        
     }
 
     public function show($item_id)
@@ -94,27 +118,27 @@ class ItemController extends Controller
     /**
      * 【FN016対応】マイリスト（いいねした商品）一覧を表示
      */
-    public function mylist(Request $request)
-    {
+    //public function mylist(Request $request)
+    //{
         // 1. 未ログインの場合は空の配列かログイン画面へ（要件に合わせて調整）
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
+        //if (!Auth::check()) {
+            //return redirect()->route('login');
+       // }
 
         // 2. 自分が「いいね」した商品のクエリを作成
-        $query = Item::with('purchase')
-            ->whereHas('likes', function ($q) {
-                $q->where('user_id', Auth::id());
-            });
+        //$query = Item::with('purchase')
+            //->whereHas('likes', function ($q) {
+                //$q->where('user_id', Auth::id());
+            //});
 
         // 3. 【FN016】マイリスト側でも商品名（name）で部分一致検索（LIKE）をかける
-        $keyword = $request->input('keyword');
-        if (!empty($keyword)) {
-            $query->where('name', 'LIKE', "%{$keyword}%");
-        }
+        //$keyword = $request->input('keyword');
+        //if (!empty($keyword)) {
+            //$query->where('name', 'LIKE', "%{$keyword}%");
+        //}
 
-        $items = $query->get();
+        //$items = $query->get();
 
-        return view('index', compact('items', 'keyword'));
-    }
+        //return view('index', compact('items', 'keyword'));
+    //}
 }

@@ -49,13 +49,13 @@ class DatabaseSeeder extends Seeder
            ItemSeeder::class,
         ]);
 
-        Purchase::create([
-            'user_id' => 2,
-            'item_id' => 1,
-            'payment_method' => 'card', 
-            'shipping_address' => '大阪府...', 
-            'shipping_post_code' => '000-0000',
-            'shipping_building' => '',
-        ]);
+        //Purchase::create([
+            //'user_id' => 2,
+            //'item_id' => 1,
+            //'payment_method' => 'card', 
+            //'shipping_address' => '大阪府...', 
+            //'shipping_post_code' => '000-0000',
+            //'shipping_building' => '',
+        //]);
     }
 }

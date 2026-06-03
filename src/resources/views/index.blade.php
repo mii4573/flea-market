@@ -4,14 +4,12 @@
 <div class="container">
     
     <div class="tabs">
-        <!-- 💡 おすすめタブ：リンク先を「/」にして、検索キーワードがあれば引き継ぐ -->
-        <a href="{{ url('/' . ( !empty($keyword) ? '?keyword=' . urlencode($keyword) : '' )) }}" 
-           class="tab-item {{ !Request::is('mylist') ? 'active' : '' }}">おすすめ</a>
+        <a href="{{ route('item.index', array_filter(['keyword' => $keyword])) }}" 
+           class="tab-item {{ $tab !== 'mylist' ? 'active' : '' }}">おすすめ</a>
         
         @auth
-            <!-- 💡 マイリストタブ：リンク先を「/mylist」にして、検索キーワードがあれば引き継ぐ -->
-            <a href="{{ url('/mylist' . ( !empty($keyword) ? '?keyword=' . urlencode($keyword) : '' )) }}" 
-               class="tab-item {{ Request::is('mylist') ? 'active' : '' }}">マイリスト</a>
+            <a href="{{ route('item.index', array_filter(['tab' => 'mylist', 'keyword' => $keyword])) }}" 
+               class="tab-item {{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
         @endauth
     </div>
 

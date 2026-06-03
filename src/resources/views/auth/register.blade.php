@@ -8,7 +8,7 @@
 <div class="auth-container">
     <h2>会員登録</h2>
 
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" novalidate>
         @csrf
 
         {{-- ユーザー名 --}}
