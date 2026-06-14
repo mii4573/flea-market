@@ -53,7 +53,9 @@ phpMyAdmin:http://localhost:8080
 メール認証(MailHog)URL：http://localhost:8025  
 
 ##メール認証について  
-(MailHog)URL：http://localhost:8025にアクセスすることで、会員登録時に送信された認証メールを確認します
+(MailHog)URL：http://localhost:8025
+にアクセスすることで、会員登録時に送信された認証メールを確認します
+
 
 
 
