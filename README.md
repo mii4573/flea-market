@@ -15,10 +15,16 @@ docker-compose up -d --build
 
 docker-compose exec php bash  
 composer install  
-cp .env.example .env  
+cp .env.example .env <環境変数を適宜変更>  
+
 php artisan key:generate  
 php artisan migrate:fresh --seed  
-php artisan storage:link
+php artisan storage:link  
+
+**補足：もし画面を開いたときに「Permission denied」のエラーが出る場合**
+コンテナ内で以下のコマンドを実行して、フォルダの権限を変更してください。
+
+chmod -R 777 storage bootstrap/cache
 
 
 ##初期データについて  
