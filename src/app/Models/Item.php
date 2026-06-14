@@ -51,7 +51,7 @@ class Item extends Model
 
     public function categories()
     {
-        // 中間テーブル 'item_category' を経由して、複数のCategoryを取得できるようにします
+        // 中間テーブル 'item_category' を経由して、複数のCategoryを取得できる
         return $this->belongsToMany(Category::class, 'item_category');
     }
 

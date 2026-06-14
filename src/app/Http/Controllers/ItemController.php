@@ -74,10 +74,10 @@ class ItemController extends Controller
 
     public function store(ExhibitionRequest $request) 
     {
-        // 1. 画像アップロード処理 (FN029)
+        // 1. 画像アップロード処理 
         $imagePath = $request->file('item_image')->store('item_image', 'public');
 
-        // 2. 商品情報の保存 (FN028)
+        // 2. 商品情報の保存 
         $item = Item::create([
             'seller_id'   => Auth::id(), 
             'name'        => $request->input('name'),
@@ -88,7 +88,7 @@ class ItemController extends Controller
             'image_path'  => $imagePath, 
         ]);
 
-        // 3. 複数選択されたカテゴリの紐付け (FN028-1-2)
+        // 3. 複数選択されたカテゴリの紐付け 
         if ($request->has('categories')) {
             $item->categories()->attach($request->input('categories'));
         }
@@ -99,7 +99,7 @@ class ItemController extends Controller
 
     public function storeComment(CommentRequest $request, $item_id)
     {
-        // 1. ログインしていない場合はログイン画面へ（FN020-1：未ログイン時のガード）
+        // 1. ログインしていない場合はログイン画面へ（未ログイン時のガード）
         if (!Auth::check()) {
             return redirect()->route('login');
         }
@@ -115,30 +115,5 @@ class ItemController extends Controller
         return back()->with('message', 'コメントを投稿しました');
     }
 
-    /**
-     * 【FN016対応】マイリスト（いいねした商品）一覧を表示
-     */
-    //public function mylist(Request $request)
-    //{
-        // 1. 未ログインの場合は空の配列かログイン画面へ（要件に合わせて調整）
-        //if (!Auth::check()) {
-            //return redirect()->route('login');
-       // }
-
-        // 2. 自分が「いいね」した商品のクエリを作成
-        //$query = Item::with('purchase')
-            //->whereHas('likes', function ($q) {
-                //$q->where('user_id', Auth::id());
-            //});
-
-        // 3. 【FN016】マイリスト側でも商品名（name）で部分一致検索（LIKE）をかける
-        //$keyword = $request->input('keyword');
-        //if (!empty($keyword)) {
-            //$query->where('name', 'LIKE', "%{$keyword}%");
-        //}
-
-        //$items = $query->get();
-
-        //return view('index', compact('items', 'keyword'));
-    //}
+   
 }

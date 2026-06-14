@@ -40,7 +40,7 @@ class ProfileController extends Controller
         // プロフィールがまだ無い場合は新しいインスタンスを作る
         $profile = $user->profile ?? new Profile();
 
-        // 💡 ビューのファイルを「resources/views/profile/edit.blade.php」にする場合は 'profile.edit' にします
+        //  ビューのファイルを「resources/views/profile/edit.blade.php」にする場合は 'profile.edit' 
         return view('profile_edit', compact('user', 'profile'));
     }
 
@@ -51,7 +51,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         
-        // 💡 要件定義(FN027)に合わせ、大元のusersテーブルのnameも一緒に更新
+        //  要件定義に合わせ、大元のusersテーブルのnameも一緒に更新
         $user->name = $request->display_name;
         $user->save();
         
@@ -65,7 +65,7 @@ class ProfileController extends Controller
 
         // 画像のアップロード処理
         if ($request->hasFile('image')) {
-            // 💡 古い画像がすでに登録されていれば、ストレージから削除して綺麗にする
+            //  古い画像がすでに登録されていれば、ストレージから削除して綺麗にする
             if ($profile->image_path) {
                 Storage::disk('public')->delete($profile->image_path);
             }

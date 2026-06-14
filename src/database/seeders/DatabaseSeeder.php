@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user2 = User::create([
+          'id' => 2,
           'name' => 'テスト花子',
           'email' => 'hanako@example.com',
           'password' => Hash::make('password456'),
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
         'display_name' => '花子',
         'post_code' => '000-0000',
         'address' => '大阪府...',
+        'building' => '',
         ]);
 
 
