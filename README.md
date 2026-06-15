@@ -14,8 +14,13 @@ docker-compose up -d --build
 ##Laravel環境構築
 
 docker-compose exec php bash  
-composer install  
+composer install
+  
 cp .env.example .env <環境変数を適宜変更>  
+**決済機能確認のため、.envの最末尾の
+STRIPE_PUBLIC_KEY  
+STRIPE_SECRET_KEY  
+にStripeテスト用のAPIキーを必ず設定してください 
 
 php artisan key:generate  
 php artisan migrate:fresh --seed  
