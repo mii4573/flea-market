@@ -17,6 +17,8 @@ docker-compose exec php bash
 composer install
   
 cp .env.example .env <環境変数を適宜変更>  
+
+
 **決済機能確認のため、.envの最末尾の
 STRIPE_KEY  
 STRIPE_SECRET  
@@ -47,6 +49,27 @@ chmod -R 777 storage bootstrap/cache
 パスワード：password456 
 
 
+##テスト実行  
+
+PHPUnit実行時にテスト用データベース(demo_test)を利用します
+
+テスト実行前に、MySQLコンテナに接続してテスト用データベースを作成してください  
+
+```sql
+CREATE DATABASE demo_test;
+```
+
+```bash
+php artisan test
+```
+
+テスト環境設定は以下のファイルで管理しています
+
+- phpunit.xml  
+- config/database.php  
+
+
+
 ##使用技術
 
 -php 8.1 -fpm  
@@ -66,6 +89,8 @@ phpMyAdmin:http://localhost:8080
 ##メール認証について  
 (MailHog)URL：http://localhost:8025
 にアクセスすることで、会員登録時に送信された認証メールを確認します
+
+
 
 
 
