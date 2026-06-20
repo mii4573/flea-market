@@ -18,8 +18,8 @@ composer install
   
 cp .env.example .env <環境変数を適宜変更>  
 **決済機能確認のため、.envの最末尾の
-STRIPE_PUBLIC_KEY  
-STRIPE_SECRET_KEY  
+STRIPE_KEY  
+STRIPE_SECRET  
 にStripeテスト用のAPIキーを必ず設定してください 
 
 php artisan key:generate  
